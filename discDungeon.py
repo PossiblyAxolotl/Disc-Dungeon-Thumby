@@ -11,14 +11,20 @@ sawMap = bytearray([85,254,127,230,103,254,127,170,170,127,254,103,230,127,254,8
 
 saws = []
 
-pX, pY = 0,0
+pX, pY, pS = 0,0,1 # pS = playerSpeed
+
+score = 0
+scoreY, scoreYlerp = -10, 3
+
+def lerp(a, b, t):
+    return (1 - t) * a + t * b
 
 def addSaw(amount):
     sprSaw = thumby.Sprite(8,8,sawMap,random.randint(2,thumby.display.width-10),random.randint(2,thumby.display.height-10))
     sprSaw.dir = random.randint(0,359)
     sprSaw.aniCounter = random.randint(0,2)
     sprSaw.setFrame(random.randint(0,1))
-    sprSaw.speed = 1
+    sprSaw.speed = 0.5
     sprSaw.xdir = 1
     sprSaw.ydir = 1
     saws.append(sprSaw)
@@ -52,20 +58,27 @@ def updateSaws():
         # draw
         thumby.display.drawSprite(saw)
 
-addSaw(3)
+addSaw(1)
+addSaw(1)
+addSaw(1)
 
 while True:
-    thumby.display.fill(0) # clear
+    thumby.display.fill(0)
     
     # Input
+    if thumby.actionPressed():
+        pS = 0.5
+    else:
+        pS = 1
+        
     if thumby.buttonU.pressed():
-        pY -= 1
+        pY -= pS
     elif thumby.buttonD.pressed():
-        pY += 1
+        pY += pS
     if thumby.buttonL.pressed():
-        pX -= 1
+        pX -= pS
     elif thumby.buttonR.pressed():
-        pX += 1
+        pX += pS
         
     # Bounds
     if pX < 2: pX = 2
@@ -73,14 +86,23 @@ while True:
     if pY < 2: pY = 2
     if pY > thumby.display.height-5: pY = thumby.display.height-5
     
+    if pY < 10: 
+        scoreYlerp = -10 
+    else: 
+        scoreYlerp = 3
+    
+    scoreY = lerp(scoreY,scoreYlerp,0.1)
     
     # drawing
     updateSaws()
     
     thumby.display.drawRectangle(0,0,thumby.display.width-1, thumby.display.height-1, 1)
     
-    thumby.display.drawRectangle(pX, pY, 2,2, 1)
+    thumby.display.drawRectangle(round(pX), round(pY), 2,2, 1)
+    
+    thumby.display.drawText(str(score),3,round(scoreY),1)
     
     # update screen
     thumby.display.update() 
+
     
