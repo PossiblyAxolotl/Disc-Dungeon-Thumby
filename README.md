@@ -7,4 +7,6 @@ Play on itch.io here: [https://possiblyaxolotl.itch.io/discdungeon](https://poss
 
 ![arcade_DiscDungeon_video](https://user-images.githubusercontent.com/76883695/233811766-331ed7e6-f6c3-4992-9c65-2a3907006882.gif)
 
-Devlog coming soon...
+Watch the devlog here
+
+[![devlog](https://img.youtube.com/vi/sbA5jME0SM4/0.jpg)](https://www.youtube.com/watch?v=sbA5jME0SM4)
